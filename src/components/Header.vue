@@ -1,0 +1,95 @@
+<script setup lang="ts">
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue';
+import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
+import {CardStorage} from '@/storages/storage';
+import UserCardDesktop from '@/components/UserCardDesktop.vue';
+import UserCardMobile from '@/components/UserCardMobile.vue';
+import { useRoute } from 'vue-router';
+import logoPng from '@/assets/logo.png';
+
+const cardStorage = CardStorage.getInstance();
+
+const navigation = [
+    { name: 'Запасти', to: 'home' },
+    { name: 'Ремонт и услуги', to: 'services' },
+]
+
+const route = useRoute();
+
+</script>
+
+<template>
+    <UserCardMobile class="md:hidden"></UserCardMobile>
+    <Disclosure as="nav" class="bg-gray-800 fixed w-full" v-slot="{ open }">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center">
+                    <RouterLink to="/" class="flex-shrink-0 border-transparent border hover:border rounded-md hover:border-white">
+                        <img class="h-10 w-10 " :src="logoPng"
+                            alt="Home" />
+                    </RouterLink>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <RouterLink v-for="item in navigation" :key="item.name" :to="{ name: item.to }"
+                                :class="[item.to == route.name ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'rounded-md px-3 py-2 text-sm font-medium']"
+                                :aria-current="item.to == route.name ? 'page' : undefined">{{ item.name }}</RouterLink>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-4 flex items-center md:ml-6">
+                        <!-- Profile dropdown -->
+                        <div class="relative ml-3">
+                            <div>
+                                <div @click="()=>{
+                                    cardStorage.isActive.value = !cardStorage.isActive.value;
+                            
+                                }"
+                                    class="relative text-white cursor-pointer flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                                    <span class="absolute -inset-1.5" />
+                                    <span class="sr-only">Open user menu</span>
+                                    <ShoppingCartIcon class="h-6 w-6" aria-hidden="true" />
+                                    <div
+                                        class="bg-red-400 w-[20px] text-white text-sm flex items-center justify-center rounded-[100%] h-[20px]">
+                                        {{
+                                            cardStorage.goods.value.length }}</div>
+                                </div>
+                            </div>
+                            <UserCardDesktop></UserCardDesktop>
+                        </div>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden gap-3 items-center">
+                    <!-- Mobile menu button -->
+                    <DisclosureButton
+                        class="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        <span class="absolute -inset-0.5" />
+                        <span class="sr-only">Open main menu</span>
+                        <Bars3Icon v-if="!open" class="block h-6 w-6" aria-hidden="true" />
+                        <XMarkIcon v-else class="block h-6 w-6" aria-hidden="true" />
+                    </DisclosureButton>
+                    <div @click="cardStorage.isActive.value = !cardStorage.isActive.value"
+                        class="pr-2 flex relative cursor-pointer">
+                        <ShoppingCartIcon class="h-6 w-6 text-white" aria-hidden="true" />
+                        <div
+                            class="bg-red-400 text-white w-[15px] bottom-[-3px] right-0 absolute text-[10px] flex items-center justify-center rounded-[100%] h-[15px]">
+                            {{
+                                cardStorage.goods.value.length }}</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <DisclosurePanel class="md:hidden">
+            <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+                <DisclosureButton v-for="item in navigation" :key="item.name" as="div">
+                    <RouterLink :to="{ name: item.to }"
+                        :class="[item.to == route.name ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block rounded-md px-3 py-2 text-base font-medium']"
+                        :aria-current="item.to == route.name ? 'page' : undefined">{{ item.name }}</RouterLink>
+                </DisclosureButton>
+            </div>
+        </DisclosurePanel>
+</Disclosure></template>
+
+<style scoped></style>
