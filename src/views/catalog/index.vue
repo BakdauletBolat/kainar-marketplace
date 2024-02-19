@@ -14,7 +14,7 @@
 -->
 <template>
   <div class="bg-white">
-    <div>
+    <div >
       <!-- Mobile filter dialog -->
       <TransitionRoot as="template" :show="mobileFiltersOpen">
         <Dialog as="div" class="relative z-40 lg:hidden" @close="mobileFiltersOpen = false">
@@ -76,7 +76,7 @@
 
       <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-5">
-          <h1 class="text-4xl font-bold tracking-tight text-gray-900">Каталог</h1>
+          <h1 class="text-xl font-bold tracking-tight text-gray-900">Каталог</h1>
 
           <div class="flex items-center">
             <Menu as="div" class="relative inline-block text-left">
@@ -119,7 +119,7 @@
         </div>
 
         <section aria-labelledby="products-heading" class="pb-24 pt-6">
-          <h2 id="products-heading" class="sr-only">Products</h2>
+          <h2 id="products-heading" class="my-3 font-medium">Найдено по запросу</h2>
           <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
             <!-- Filters -->
             <form class="hidden lg:block">
@@ -158,7 +158,6 @@
             </div>
           </div>
         </section>
-        {{ catalogStorage.selectedValues.value }}
       </main>
     </div>
   </div>
@@ -191,8 +190,9 @@ const catalogStorage = CatalogStorage.getInstance();
 
 onMounted(async () => {
   const route =  useRoute();
-  console.log(route.query.category);
-  catalogStorage.selectedValues.value.category = route.query.category?.toString().split(",").map(Number) as [];
+  if (route.query.category != undefined) {
+    catalogStorage.selectedValues.value.category = route.query.category?.toString().split(",").map(Number) as [];
+  }
   catalogStorage.loadProducts();
 });
 

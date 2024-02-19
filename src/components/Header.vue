@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue';
 import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
-import {CardStorage} from '@/storages/storage';
+import { CardStorage } from '@/storages/storage';
 import UserCardDesktop from '@/components/UserCardDesktop.vue';
 import UserCardMobile from '@/components/UserCardMobile.vue';
 import { useRoute } from 'vue-router';
@@ -20,13 +20,13 @@ const route = useRoute();
 
 <template>
     <UserCardMobile class="md:hidden"></UserCardMobile>
-    <Disclosure as="nav" class="bg-gray-800 fixed w-full" v-slot="{ open }">
+    <Disclosure as="nav" class="bg-gray-800 fixed z-[9999] w-full" v-slot="{ open }">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 items-center justify-between">
                 <div class="flex items-center">
-                    <RouterLink to="/" class="flex-shrink-0 border-transparent border hover:border rounded-md hover:border-white">
-                        <img class="h-10 w-10 " :src="logoPng"
-                            alt="Home" />
+                    <RouterLink to="/"
+                        class="flex-shrink-0 border-transparent border hover:border rounded-md hover:border-white">
+                        <img class="h-10 w-10 " :src="logoPng" alt="Home" />
                     </RouterLink>
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
@@ -41,9 +41,9 @@ const route = useRoute();
                         <!-- Profile dropdown -->
                         <div class="relative ml-3">
                             <div>
-                                <div @click="()=>{
+                                <div @click="() => {
                                     cardStorage.isActive.value = !cardStorage.isActive.value;
-                            
+
                                 }"
                                     class="relative text-white cursor-pointer flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                     <span class="absolute -inset-1.5" />
@@ -90,6 +90,7 @@ const route = useRoute();
                 </DisclosureButton>
             </div>
         </DisclosurePanel>
-</Disclosure></template>
+    </Disclosure>
+</template>
 
 <style scoped></style>

@@ -83,6 +83,12 @@ interface Category {
     name: string;
 }
 
+type ProductFilters = {
+  category: never[];
+  color: never[];
+  size: never[];
+};
+
 class NetworkCatalogStorage {
     categories = ref<Category[]>([
       { id: 1, name: 'Автозапчасти' },
@@ -99,17 +105,20 @@ class NetworkCatalogStorage {
     products = ref([]);
     categoryLoadError: boolean = false;
     selectedValues = ref({
-      category: [],
       color: [],
-      size: []
+      size: [],
+      category: [],
     });
 
     updateSelectedValues(key: string, value:any) {
+      // @ts-ignore
       const index = this.selectedValues.value[key].findIndex(item=>item==value);
       if (index != -1) {
+        // @ts-ignore
         this.selectedValues.value[key].splice(index, 1);
         return;
       }
+      // @ts-ignore
       this.selectedValues.value[key].push(value);
 
     }
@@ -135,7 +144,7 @@ class NetworkCatalogStorage {
                 return {
                     value: item.id,
                     label: item.name,
-                    checked: this.selectedValues.value.category.includes(item.id as never) ? true : false 
+                    checked: false 
                 }
               })
             },
