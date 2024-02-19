@@ -83,11 +83,7 @@ interface Category {
     name: string;
 }
 
-type ProductFilters = {
-  category: never[];
-  color: never[];
-  size: never[];
-};
+
 
 class NetworkCatalogStorage {
     categories = ref<Category[]>([
