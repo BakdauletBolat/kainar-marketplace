@@ -123,15 +123,12 @@ class NetworkCatalogStorage {
         return  [
             {
               id: 'color',
-              name: 'Цвета',
-              options: [
-                { value: 'white', label: 'White', checked: false },
-                { value: 'beige', label: 'Beige', checked: false },
-                { value: 'blue', label: 'Blue', checked: false },
-                { value: 'brown', label: 'Brown', checked: false },
-                { value: 'green', label: 'Green', checked: false },
-                { value: 'purple', label: 'Purple', checked: false },
-              ],
+              name: 'Цена',
+              type: 'range',
+              range: {
+                labelFrom: 'От',
+                labelTo: 'До'
+              }
             },
             {
               id: 'category',
@@ -140,7 +137,7 @@ class NetworkCatalogStorage {
                 return {
                     value: item.id,
                     label: item.name,
-                    checked: false 
+                    checked: this.selectedValues.value.category.filter(id=>id == item.id).length > 0 ? true : false 
                 }
               })
             },
