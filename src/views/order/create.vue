@@ -224,8 +224,9 @@ function createOrder() {
         }
     }) 
     }
-    axiosInstance.post('/api/orders/', body).then((res)=>{
+    axiosInstance.post('/api/orders/', body).then((_:any)=>{
         selectedIndex.value = 3;
+        
     }).catch(e=>{
         console.log(e);
     });
