@@ -14,7 +14,7 @@
                 <ChevronRightIcon  @click="next" class="absolute z-10 top-1/2 right-0 w-7 h-7 cursor-pointer"></ChevronRightIcon>
             </div>
             <div class="flex justify-center py-3 gap-1">
-                <div v-for="(item, index) in pictures.length" :class="{
+                <div v-for="(_, index) in pictures.length" :class="{
                 '!bg-primary-hover': index == currentValue
             }" class="w-3 h-3 rounded-full bg-gray-300" ></div>
             </div>

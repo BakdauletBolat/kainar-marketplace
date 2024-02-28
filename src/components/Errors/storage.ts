@@ -9,7 +9,7 @@ type Error = {
 
 export const errors = ref<Error[]>([]);
 
-export function removeMessage(uuid: string) {
+export function removeMessage(uuid: string | undefined) {
     const index = errors.value.findIndex(item=>item.uuid == uuid);
     errors.value.splice(index,1);
 }

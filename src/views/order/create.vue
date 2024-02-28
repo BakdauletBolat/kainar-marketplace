@@ -176,7 +176,7 @@ import * as yup from 'yup';
 import axiosInstance from '@/api';
 import {addError} from '@/components/Errors';
 import Button from '@/components/Button';
-const order = ref(null);
+const order = ref<any>(null);
 
 const plan = ref('2');
 const pay = ref('1');
@@ -245,6 +245,7 @@ function createOrder() {
 }
 
 const onSubmit = handleSubmit(values => {
+    console.log(values);
     changeTab(1);
 });
 

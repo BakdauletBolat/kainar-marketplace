@@ -248,6 +248,7 @@ function addGoods() {
         id: product.value!.id,
         name: product.value!.name,
         price: product.value!.price,
+        // @ts-ignore
         picture_url: product.value!.pictures.length > 0 ? product.value!.pictures[0].image : null
     });
     cardStorage.isActive.value = true;
