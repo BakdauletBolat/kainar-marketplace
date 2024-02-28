@@ -1,6 +1,7 @@
 import axiosInstance from "@/api";
 import { getProducts } from "@/api/products";
 import { ref } from "vue";
+import { v4 as uuidv4 } from 'uuid';
 
 interface Good {
     id: number;
@@ -28,9 +29,11 @@ export interface BodyType {
 
 abstract class AbstractCardStorage {
     goods = ref<Good[]>([]);
-    uuid = ref(crypto.randomUUID());
+    uuid = ref('');
     isActive = ref<boolean>(false);
     constructor() {
+        const id = uuidv4();
+        this.uuid.value = id;
         if (localStorage.getItem('card') != null) {
           const card = JSON.parse(localStorage.getItem('card')!);
             this.goods.value = card.goods;
@@ -77,9 +80,10 @@ class LocalCardStorage extends AbstractCardStorage {
         }
     }
     resetCard() {
-      this.goods.value = []
-      this.uuid.value = crypto.randomUUID(); 
-      this.save()
+      const id = uuidv4();
+      this.uuid.value = id;
+      this.goods.value = [];
+      this.save();
     }
     decreaseGood(id: number) {
         const exists = this.goods.value.filter(item=>item.id == id);
