@@ -10,7 +10,6 @@
                     <div>Общая стоимость</div>
                     <div>{{ cardStorage.totalCost }} ₸</div>
                 </div>
-                <div class="mt-3 bg-primary p-3 text-center rounded-sm">Оформить заказ</div>
             </div>
         </div>
 </template>

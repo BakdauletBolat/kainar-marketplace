@@ -2,6 +2,7 @@ import Home from '@/views/home.vue';
 import Services from '@/views/services.vue';
 import ProductDetail from '@/views/product/detail.vue';
 import Catalog from '@/views/catalog/index.vue';
+import OrderCreate from '@/views/order/create.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
@@ -9,6 +10,11 @@ const routes = [
         path: '/',
         name: 'home',
         component: Home
+    },
+    {
+        path: '/order',
+        name: 'order-create',
+        component: OrderCreate
     },
     {
         path: '/services',

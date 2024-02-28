@@ -18,10 +18,10 @@
       <!-- Mobile filter dialog -->
       <Dialog title="Фильтр" v-model="mobileFiltersOpen">
         <!-- Filters -->
-       <FilterForm></FilterForm>
+        <FilterForm></FilterForm>
       </Dialog>
       <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="flex  items-baseline justify-between pb-6 pt-5">
+        <div class="flex bg-white border p-5 items-baseline justify-between">
           <h1 class="text-xl font-bold tracking-tight text-gray-900">Каталог</h1>
 
           <div class="flex items-center">
@@ -64,14 +64,15 @@
           </div>
         </div>
 
-        <section aria-labelledby="products-heading" class="pb-24 pt-6">
-          <h2 id="products-heading" class="my-3 font-medium">Найдено по запросу</h2>
-
-          <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-[400px_1fr]">
+        <section aria-labelledby="products-heading" class="pb-24 pt-3">
+          <div class="grid grid-cols-1 relative gap-3 lg:grid-cols-[350px_1fr]">
             <!-- Filters -->
-            <FilterForm class="hidden bg-white lg:block"></FilterForm>
+            <div class="">
+              <FilterForm class="sticky top-20 hidden bg-white lg:block"></FilterForm>
+            </div>
+
             <!-- Product grid -->
-            <div class="lg:col-span-3 grid md:px-0 md:grid-cols-2 gap-3 mt-3">
+            <div class="grid md:px-0 md:grid-cols-2 gap-3 ">
               <Card :item="item" v-for="item in catalogStorage.products.value"></Card>
             </div>
           </div>
@@ -84,7 +85,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import Dialog from '@/components/Dialog';
-import { MenuButton, MenuItems, MenuItem, Menu} from '@headlessui/vue';
+import { MenuButton, MenuItems, MenuItem, Menu } from '@headlessui/vue';
 import { ChevronDownIcon, FunnelIcon, Squares2X2Icon } from '@heroicons/vue/20/solid';
 import FilterForm from './filter-form.vue';
 import { CatalogStorage } from '@/storages/storage';
@@ -104,11 +105,11 @@ onMounted(async () => {
 });
 
 const sortOptions = [
-    { name: 'Самые популярные', href: '#', current: true },
-    { name: 'Лучший рейтинг', href: '#', current: false },
-    { name: 'Новинки', href: '#', current: false },
-    { name: 'Цена: по возрастанию', href: '#', current: false },
-    { name: 'Цена: по убыванию', href: '#', current: false }
+  { name: 'Самые популярные', href: '#', current: true },
+  { name: 'Лучший рейтинг', href: '#', current: false },
+  { name: 'Новинки', href: '#', current: false },
+  { name: 'Цена: по возрастанию', href: '#', current: false },
+  { name: 'Цена: по убыванию', href: '#', current: false }
 ];
 
 const mobileFiltersOpen = ref(false)

@@ -23,9 +23,10 @@ const route = useRoute();
     <div>
         <Dialog title="Ваша корзина" v-model="cardStorage.isActive.value">
             <UserCard></UserCard>
+            <div class="mt-3 bg-primary p-3 text-center rounded-sm">Оформить заказ</div>
         </Dialog>
     </div>
-    <Disclosure as="nav" class="bg-white shadow-sm border-b fixed z-[9999] w-full" v-slot="{ open }">
+    <Disclosure as="nav" class="bg-white border-b fixed z-[9999] w-full" v-slot="{ open }">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 items-center justify-between">
                 <div class="flex items-center">
