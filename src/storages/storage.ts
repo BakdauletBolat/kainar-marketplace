@@ -102,7 +102,7 @@ class LocalCardStorage extends AbstractCardStorage {
     }
     save() {
         localStorage.setItem('card', JSON.stringify({
-          uuid: this.uuid,
+          uuid: this.uuid.value,
           goods: this.goods.value
         }));
     }
