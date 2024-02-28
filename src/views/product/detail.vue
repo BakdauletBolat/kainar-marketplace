@@ -2,10 +2,10 @@
     <div class="mx-auto relative max-w-7xl px-4 sm:px-6 lg:px-8">
         <div v-if="product" class="grid relative w-full grid-cols-1 lg:grid-cols-[500px_1fr] gap-5">
             <div class="order-2 lg:order-1">
-                <div class="p-5 w-full bg-white border">
+                <div class="p-5 w-full bg-white border hidden lg:block">
                     <ProductSlider :pictures="product?.pictures"></ProductSlider>
                 </div>
-                <div class="p-5 w-full mt-5 bg-white border">
+                <div class="p-5 w-full lg:mt-5 bg-white border">
                     <h2 class="font-bold text-lg">Машина</h2>
                     <div>
                         <ul>
@@ -141,36 +141,40 @@
             </div>
 
             <div class="order-1 lg:order-2">
-                <div class="sticky top-20 z-10">
+                <div class="lg:sticky lg:top-20 z-10">
                     <div class="border bg-white p-5">
-                        <h1 class="text-lg lg:text-2xl font-bold ">{{ product.name }}</h1>
+                        <ProductMobileSlider :pictures="product?.pictures" class="lg:hidden border"></ProductMobileSlider>
+                        <h1 class="text-lg lg:text-2xl font-bold mt-3">{{ product.modification.modelCar.name }} (
+                            {{ product.modification.modelCar.startDate }} - {{ product.modification.modelCar.endDate }}
+                        ) {{ product.name }}</h1>
                         <div class="flex justify-between flex-col lg:flex-row gap-2 lg:gap-0 lg:items-center mt-3">
                             <div class="text-xl lg:text-2xl font-bold">{{product.price}} ₸</div>
-                            <div>
-                                <button class="p-3 bg-primary rounded-sm flex gap-1">
-                                    <ShoppingCartIcon class="h-6 w-6"></ShoppingCartIcon> Добавить к корзину
+                                <button @click="cardStorage.isActive.value = true" v-if="cardStorage.checkInGoods(product.id)" class="rounded-sm flex p-3 gap-1 border justify-center">
+                                    <ShoppingCartIcon class="h-6 w-6"></ShoppingCartIcon> В корзину
                                 </button>
-                            </div>
+                                <button v-else @click="addGoods" class="p-3 bg-primary rounded-sm flex gap-1 justify-center">
+                                    <ShoppingCartIcon class="h-6 w-6"></ShoppingCartIcon> Добавить в корзину
+                                </button>
                         </div>
                     </div>
-                    <div class="flex lg:gap-2 lg:flex-row py-5 px-5 justify-between flex-col gap-5">
-                        <div class="flex gap-2">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 border bg-white lg:gap-2 py-5 px-5 justify-between my-4 gap-5">
+                        <div class="flex gap-2 flex-col items-center">
                             <TruckIcon class="w-12 h-12 text-sky-500"></TruckIcon>
-                            <div class="flex flex-col justify-center">
+                            <div class="flex flex-col justify-center items-center">
                                 <h3>1-2 д.</h3>
                                 <p class="text-sm text-gray-500">Расчетная дата доставки*</p>
                             </div>
                         </div>
-                        <div class="flex gap-2">
+                        <div class="flex gap-2 flex-col items-center">
                             <CheckBadgeIcon class="w-12 h-12 text-sky-500"></CheckBadgeIcon>
-                            <div class="flex flex-col justify-center">
+                            <div class="flex flex-col justify-center items-center">
                                 <h3>14 д.</h3>
                                 <p class="text-sm text-gray-500">Гарантия возврата</p>
                             </div>
                         </div>
-                        <div class="flex gap-2">
+                        <div class="flex gap-2 flex-col items-center">
                             <StarIcon class="w-12 h-12 text-sky-500"></StarIcon>
-                            <div class="flex flex-col justify-center">
+                            <div class="flex flex-col justify-center items-center">
                                 <h3>4.6/5</h3>
                                 <p class="text-sm text-gray-500">Оценка клиента</p>
                             </div>
@@ -221,6 +225,10 @@ import ProductSlider from "./product-slider.vue";
 import { useRoute } from "vue-router";
 import axiosInstance from "@/api";
 import {Product} from '@/api/products';
+import ProductMobileSlider from './product-mobile.slider.vue';
+import { CardStorage } from "@/storages/storage";
+
+const cardStorage = CardStorage.getInstance();
 
 const route = useRoute();
 
@@ -234,6 +242,16 @@ onMounted(()=>{
     getProduct(parseInt(route.params.id.toString()));
 });
 
+function addGoods() {
+    cardStorage.addGood({
+        quantity: 1,
+        id: product.value!.id,
+        name: product.value!.name,
+        price: product.value!.price,
+        picture_url: product.value!.pictures.length > 0 ? product.value!.pictures[0].image : null
+    });
+    cardStorage.isActive.value = true;
+}
 
 
 const countryId = ref<Option | undefined>(undefined);

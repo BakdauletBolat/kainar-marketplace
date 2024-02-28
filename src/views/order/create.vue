@@ -37,25 +37,25 @@
                         <TabPanel>
                             <form @submit="onSubmit" class="flex border p-5 bg-white flex-col gap-3">
                                 <div class="text-2xl font-bold">Адрес доставки</div>
-                                <div class="flex gap-3">
+                                <div class="flex flex-col lg:flex-row gap-3">
                                     <Input name="name" placeholder="Имя"></Input>
                                     <Input name="surname" placeholder="Фамилия"></Input>
                                 </div>
-                                <div class="flex gap-3">
+                                <div class="flex flex-col lg:flex-row gap-3">
                                     <Input name="address" placeholder="Адрес"></Input>
                                     <div class="flex gap-3">
                                         <Input name="house" placeholder="Дом"></Input>
                                         <Input name="flat" placeholder="Квартира"></Input>
                                     </div>
                                 </div>
-                                <div class="flex gap-3">
+                                <div class="flex  flex-col lg:flex-row gap-3">
                                     <div class="flex gap-3">
                                         <Input name="mail_index" placeholder="Почтовый индекс"></Input>
                                         <Input name="country" placeholder="Страна"></Input>
                                     </div>
                                     <Input name="city" placeholder="Город" />
                                 </div>
-                                <div class="flex gap-3">
+                                <div class="flex  flex-col lg:flex-row gap-3">
                                     <Input name="email" placeholder="Email"></Input>
                                     <Input name="phone" placeholder="Телефон"></Input>
                                 </div>
@@ -108,7 +108,7 @@
                                     </RadioGroupOption>
 
                                 </RadioGroup>
-                                <button
+                                <button @click="changeTab(2)"
                                     class="mt-3 bg-primary p-3 text-center cursor-pointer rounded-sm">Продолжить</button>
                             </div>
                         </TabPanel>
@@ -140,11 +140,13 @@
                                             </div>
                                         </div>
                                     </RadioGroupOption>
-                                    
-
                                 </RadioGroup>
-                                <button @click="createOrder"
-                                    class="mt-3 bg-primary p-3 text-center cursor-pointer rounded-sm">Продолжить</button>
+                                <Button :isLoading="orderCreateLoading" @click="createOrder" name="Продолжить"></Button>
+                            </div>
+                        </TabPanel>
+                        <TabPanel>
+                            <div v-if="order" class="flex border p-5 bg-white flex-col gap-3">
+                               Спасибо #{{order.id}} ваш заказ создан !
                             </div>
                         </TabPanel>
                     </TabPanels>
@@ -172,20 +174,21 @@ import { ref } from 'vue';
 import { CardStorage } from '@/storages/storage';
 import * as yup from 'yup';
 import axiosInstance from '@/api';
+import {addError} from '@/components/Errors';
+import Button from '@/components/Button';
+const order = ref(null);
 
-
-const plan = ref('2')
+const plan = ref('2');
 const pay = ref('1');
 
 const cardStorage = CardStorage.getInstance();
 
 const selectedIndex = ref(0);
+const orderCreateLoading = ref(false);
 
 
 
-
-
-const { handleSubmit, validate } = useForm({
+const { handleSubmit } = useForm({
     validationSchema: yup.object({
         name: yup.string().required('Имя обязательно'),
         surname: yup.string().required('Фамилия обязательно'),
@@ -203,15 +206,18 @@ const { handleSubmit, validate } = useForm({
 
 
 function changeTab(index: number) {
-    validate();
+    window.scrollTo({
+        top: 0
+    })
     selectedIndex.value = index;
 }
 
 
 
 function createOrder() {
+    
     const body = {
-    "warehouse_id": 2,
+    "warehouse_id":2,
     "payment_type_id": pay.value,
     "delivery_type_id": plan.value,
     "comment": null,
@@ -224,17 +230,22 @@ function createOrder() {
         }
     }) 
     }
-    axiosInstance.post('/api/orders/', body).then((_:any)=>{
-        selectedIndex.value = 3;
-        
+    orderCreateLoading.value = true;
+    axiosInstance.post('/api/orders/', body).then((res)=>{
+        selectedIndex.value = 3; 
+        order.value = res.data;
     }).catch(e=>{
-        console.log(e);
+        addError({
+            timeout: 5,
+            message: e.toString(),
+        });
+    }).finally(()=>{
+        orderCreateLoading.value = false;
     });
 }
 
 const onSubmit = handleSubmit(values => {
-    alert(JSON.stringify(values, null, 2));
-    selectedIndex.value += 1;
+    changeTab(1);
 });
 
 </script>

@@ -64,7 +64,7 @@
           </div>
         </div>
 
-        <section aria-labelledby="products-heading" class="pb-24 pt-3">
+        <section aria-labelledby="products-heading" class="pb-24">
           <div class="grid grid-cols-1 relative gap-3 lg:grid-cols-[350px_1fr]">
             <!-- Filters -->
             <div class="">
@@ -72,7 +72,7 @@
             </div>
 
             <!-- Product grid -->
-            <div class="grid md:px-0 md:grid-cols-2 gap-3 ">
+            <div class="grid md:px-0 grid-cols-2 gap-1 md:gap-3">
               <Card :item="item" v-for="item in catalogStorage.products.value"></Card>
             </div>
           </div>

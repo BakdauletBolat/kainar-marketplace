@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import Header from '@/components/Header.vue';
+import Errors from '@/components/Errors';
 </script>
+
 
 <template>
   <div class="relative min-h-full bg-slate-100">
     <Header></Header>
     <div class="pt-[80px] bg-slate-100">
+      <Errors></Errors>
       <router-view></router-view>
     </div>
     <div class="flex p-3bg-slate-100 max-w-7xl mx-auto mt-[200px] gap-3 justify-end">

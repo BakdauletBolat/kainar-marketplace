@@ -2,17 +2,26 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue';
 import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
 import { CardStorage } from '@/storages/storage';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import logoPng from '@/assets/new-logo.png';
 import Dialog from './Dialog';
 import UserCard from '@/components/UserCard.vue';
 
 const cardStorage = CardStorage.getInstance();
 
+const router = useRouter();
 const navigation = [
     { name: 'Запчасти', to: 'home' },
     { name: 'Ремонт и услуги', to: 'services' },
 ]
+
+
+function navigateToOrder() {
+    cardStorage.isActive.value = false;
+    router.push({
+        name: 'order-create'
+    })
+}
 
 
 const route = useRoute();
@@ -23,7 +32,7 @@ const route = useRoute();
     <div>
         <Dialog title="Ваша корзина" v-model="cardStorage.isActive.value">
             <UserCard></UserCard>
-            <div class="mt-3 bg-primary p-3 text-center rounded-sm">Оформить заказ</div>
+            <button @click="navigateToOrder" class="mt-3 bg-primary w-full block p-3 text-center rounded-sm">Оформить заказ</button>
         </Dialog>
     </div>
     <Disclosure as="nav" class="bg-white border-b fixed z-[9999] w-full" v-slot="{ open }">
@@ -75,7 +84,7 @@ const route = useRoute();
                                 cardStorage.goods.value.length }}</div>
                     </div>
                     <DisclosureButton
-                        class="relative inline-flex items-center justify-center rounded-md bg-primary p-2 text-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-hover">
+                        class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-hover">
                         <span class="absolute -inset-0.5" />
                         <span class="sr-only">Open main menu</span>
                         <Bars3Icon v-if="!open" class="block h-6 w-6" aria-hidden="true" />

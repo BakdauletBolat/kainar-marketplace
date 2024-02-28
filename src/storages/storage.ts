@@ -36,6 +36,9 @@ class LocalCardStorage extends AbstractCardStorage {
         });
         return total;
     }
+    checkInGoods(id: number) {
+      return this.goods.value.filter(item=>item.id==id).length > 0;
+    }
     addGood(good: Good) {
         const exists = this.goods.value.filter(item=>item.id == good.id);
         if (exists.length == 0) {
@@ -159,6 +162,7 @@ class NetworkCatalogStorage {
       const res = await getProducts();
       this.products.value = res.data.results;
     }
+    
     async loadCategories() {
         await fetch('');
     }
