@@ -55,6 +55,7 @@ function update(item: Option) {
         model.value?.push(item);
     }
     query.value = '';
+    closeDropDown();
 }
 
 function contains(item: Option) {

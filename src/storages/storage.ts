@@ -1,3 +1,4 @@
+import axiosInstance from "@/api";
 import { getProducts } from "@/api/products";
 import { ref } from "vue";
 
@@ -9,12 +10,31 @@ interface Good {
     quantity: number;
 }
 
+export interface FiltersType {
+  capacities:  number[];
+  body_types:  BodyType[];
+  fuel_types:  BodyType[];
+  drive_types: BodyType[];
+  gear_types:  BodyType[];
+  colors:      BodyType[];
+  powers:      number[];
+}
+
+export interface BodyType {
+  id:   number;
+  name: string;
+}
+
+
 abstract class AbstractCardStorage {
     goods = ref<Good[]>([]);
+    uuid = ref(crypto.randomUUID());
     isActive = ref<boolean>(false);
     constructor() {
-        if (localStorage.getItem('goods') != null) {
-            this.goods.value = JSON.parse(localStorage.getItem('goods')!);
+        if (localStorage.getItem('card') != null) {
+          const card = JSON.parse(localStorage.getItem('card')!);
+            this.goods.value = card.goods;
+            this.uuid.value = card.uuid;
         }   
     }
     abstract addGood(good: Good): any;
@@ -56,6 +76,11 @@ class LocalCardStorage extends AbstractCardStorage {
             this.save();
         }
     }
+    resetCard() {
+      this.goods.value = []
+      this.uuid.value = crypto.randomUUID(); 
+      this.save()
+    }
     decreaseGood(id: number) {
         const exists = this.goods.value.filter(item=>item.id == id);
         if (exists.length) {
@@ -76,7 +101,10 @@ class LocalCardStorage extends AbstractCardStorage {
         }
     }
     save() {
-        localStorage.setItem('goods', JSON.stringify(this.goods.value));
+        localStorage.setItem('card', JSON.stringify({
+          uuid: this.uuid,
+          goods: this.goods.value
+        }));
     }
 }
 
@@ -104,12 +132,27 @@ class NetworkCatalogStorage {
     products = ref([]);
     categoryLoadError: boolean = false;
     selectedValues = ref({
-      color: [],
-      size: [],
+      manufactor_id: '',
       category: [],
+      modification: [],
+      capacity: [],
+      body_type: [],
+      fuel_type: [],
+      drive_type: [],
+      gear_type: [],
+      color: [],
+      powers: []
     });
 
+    loadedFilters = ref<FiltersType | null>(null);
+    loadFilters() {
+      axiosInstance.get<FiltersType>('/api/car/filters/').then(res=>{
+        this.loadedFilters.value = res.data;
+      });
+    }
+
     updateSelectedValues(key: string, value:any) {
+      console.log(key, value);
       // @ts-ignore
       const index = this.selectedValues.value[key].findIndex(item=>item==value);
       if (index != -1) {
@@ -122,45 +165,111 @@ class NetworkCatalogStorage {
 
     }
 
-    get filters() {
+    get filters(): any[] {
         return  [
+            // {
+            //   id: 'capacities',
+            //   name: 'Mощность',
+            //   type: 'range',
+            //   range: {
+            //     labelFrom: 'От',
+            //     labelTo: 'До'
+            //   }
+            // },
             {
-              id: 'color',
-              name: 'Цена',
-              type: 'range',
-              range: {
-                labelFrom: 'От',
-                labelTo: 'До'
-              }
-            },
-            {
-              id: 'category',
-              name: 'Категория',
-              options: this.categories.value.map((item)=>{
+              id: 'body_type',
+              name: 'Тип кузова', 
+              isOpen: true,
+              options: this.loadedFilters.value?.body_types.map((item)=>{
                 return {
-                    value: item.id,
-                    label: item.name,
-                    checked: this.selectedValues.value.category.filter(id=>id == item.id).length > 0 ? true : false 
+                  value: item.id,
+                  label: item.name,
+                  checked: this.selectedValues.value.body_type.filter(id=>id == item.id).length > 0 ? true : false 
                 }
               })
             },
             {
-              id: 'size',
-              name: 'Размер',
-              options: [
-                { value: '2l', label: '2L', checked: false },
-                { value: '6l', label: '6L', checked: false },
-                { value: '12l', label: '12L', checked: false },
-                { value: '18l', label: '18L', checked: false },
-                { value: '20l', label: '20L', checked: false },
-                { value: '40l', label: '40L', checked: false },
-              ],
+              id: 'fuel_type',
+              name: 'Тип заправки',
+              isOpen: true,
+              options: this.loadedFilters.value?.fuel_types.map((item)=>{
+                return {
+                    value: item.id,
+                    label: item.name,
+                    checked: this.selectedValues.value.fuel_type.filter(id=>id == item.id).length > 0 ? true : false 
+                }
+              })
+            },
+            {
+              id: 'drive_type',
+              name: 'Тип привода',
+              isOpen: false,
+              options: this.loadedFilters.value?.drive_types.map((item)=>{
+                return {
+                    value: item.id,
+                    label: item.name,
+                    checked: this.selectedValues.value.drive_type.filter(id=>id == item.id).length > 0 ? true : false 
+                }
+              })
+            },
+            {
+              id: 'gear_type',
+              name: 'Тип',
+              isOpen: false,
+              options: this.loadedFilters.value?.gear_types.map((item)=>{
+                return {
+                    value: item.id,
+                    label: item.name,
+                    checked: this.selectedValues.value.gear_type.filter(id=>id == item.id).length > 0 ? true : false 
+                }
+              })
+            },
+            {
+              id: 'color',
+              name: 'Цвет',
+              isOpen: false,
+              options: this.loadedFilters.value?.colors.map((item)=>{
+                return {
+                    value: item.id,
+                    label: item.name,
+                    checked: this.selectedValues.value.color.filter(id=>id == item.id).length > 0 ? true : false 
+                }
+              })
+            },
+            {
+              id: 'powers',
+              name: 'Power',
+              type: 'array',
+              isOpen: false,
+              options: this.loadedFilters.value?.powers
+            },
+            {
+              id: 'capacity',
+              name: 'Mощность', 
+              type: 'array',
+              isOpen: false,
+              options: this.loadedFilters.value?.capacities
             },
           ]
     }
-    async loadProducts() {
-      const res = await getProducts();
-      this.products.value = res.data.results;
+    isProductLoading = ref<boolean>(false);
+    async loadProducts(value: any) {
+      let string = '?';
+      const selectedValues: any = value;
+      Object.keys(selectedValues).forEach(function(key, _) {
+        const ne: any = selectedValues[key]
+        string += `${key}=${ne}&`;
+      });
+      this.isProductLoading.value = true;
+      getProducts(string).then(res=>{
+        this.products.value = res.data.results
+      })
+      .catch(e=>{
+        console.log(e);
+      })
+      .finally(()=>{
+        this.isProductLoading.value = false
+      });
     }
     
     async loadCategories() {

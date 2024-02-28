@@ -42,7 +42,7 @@
                   </button>
                 </div>
                 </DialogTitle>
-              <div class="mt-5">
+              <div class="mt-2">
                 <slot></slot>
               </div>
               </DialogPanel>

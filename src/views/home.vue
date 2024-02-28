@@ -9,7 +9,7 @@ const catalogStorage = CatalogStorage.getInstance();
 
 
 onMounted(() => {
-  catalogStorage.loadProducts();  
+  catalogStorage.loadProducts({});  
 });
 
 

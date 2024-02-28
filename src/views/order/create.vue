@@ -2,28 +2,28 @@
     <main class="max-w-7xl mx-auto p-3">
         <TabGroup :selected-index="selectedIndex" @change="changeTab">
             <TabList class="grid grid-cols-4 p-3 justify-center gap-2">
-                <Tab as="template" v-slot="{ selected }">
-                    <button :class="{ 'focus:outline-none !bg-primary -translate-y-1': selected }"
+                <Tab :disabled="order" as="template" v-slot="{ selected }">
+                    <button  :class="{'!bg-gray-400 opacity-50': order, 'focus:outline-none !bg-primary -translate-y-1': selected }"
                         class="bg-white px-4 flex flex-col items-center border gap-1 py-2 rounded-sm">
                         <MapIcon class="h-5 w-5"></MapIcon>
                         <div>Адрес</div>
                     </button>
                 </Tab>
-                <Tab as="template" v-slot="{ selected }">
-                    <button :class="{ 'focus:outline-none -translate-y-1 !bg-primary': selected }"
+                <Tab :disabled="order" as="template" v-slot="{ selected }">
+                    <button :class="{'!bg-gray-400 opacity-50': order,  'focus:outline-none -translate-y-1 !bg-primary': selected }"
                         class="bg-white px-4 flex flex-col items-center border gap-1 py-2 rounded-sm">
                         <TruckIcon class="w-5 h-5"></TruckIcon>
                         <div>Доставка</div>
                     </button>
                 </Tab>
-                <Tab as="template" v-slot="{ selected }">
-                    <button :class="{ 'focus:outline-none -translate-y-1 !bg-primary': selected }"
+                <Tab :disabled="order" as="template" v-slot="{ selected }">
+                    <button :class="{'!bg-gray-400 opacity-50': order,  'focus:outline-none -translate-y-1 !bg-primary': selected }"
                         class="bg-white px-4 flex flex-col items-center border gap-1 py-2 rounded-sm">
                         <BanknotesIcon class="w-5 h-5"></BanknotesIcon>
                         <div>Оплата</div>
                     </button>
                 </Tab>
-                <Tab as="template" v-slot="{ selected }">
+                <Tab :disabled="order" as="template" v-slot="{ selected }">
                     <button :class="{ 'focus:outline-none -translate-y-1 !bg-primary': selected }"
                         class="bg-white px-4 flex flex-col items-center border gap-1 py-2 rounded-sm">
                         <CheckBadgeIcon class="w-5 h-5"></CheckBadgeIcon>
@@ -234,6 +234,7 @@ function createOrder() {
     axiosInstance.post('/api/orders/', body).then((res)=>{
         selectedIndex.value = 3; 
         order.value = res.data;
+        cardStorage.resetCard();
     }).catch(e=>{
         addError({
             timeout: 5,

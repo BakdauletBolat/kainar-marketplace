@@ -53,8 +53,8 @@ export interface Picture {
     product: number;
 }
 
-export async function getProducts() {
-    return await axios.get('/api/product/')
+export async function getProducts(query: string) {
+    return await axios.get(`/api/product/${query}`,)
 }
 
 export async function getProduct(id: string) {

@@ -65,15 +65,20 @@
         </div>
 
         <section aria-labelledby="products-heading" class="pb-24">
-          <div class="grid grid-cols-1 relative gap-3 lg:grid-cols-[350px_1fr]">
+          <div class="grid grid-cols-1 relative gap-3 lg:mt-3 items-start lg:grid-cols-[350px_1fr]">
             <!-- Filters -->
             <div class="">
               <FilterForm class="sticky top-20 hidden bg-white lg:block"></FilterForm>
             </div>
 
             <!-- Product grid -->
-            <div class="grid md:px-0 grid-cols-2 gap-1 md:gap-3">
+            <div :class="{
+              'opacity-40': catalogStorage.isProductLoading.value
+            }" v-if="catalogStorage.products.value.length > 0" class="relative grid md:px-0 grid-cols-2 gap-1 md:gap-3">
               <Card :item="item" v-for="item in catalogStorage.products.value"></Card>
+            </div>
+            <div v-else>
+              Запчастей не найдено
             </div>
           </div>
         </section>
@@ -83,7 +88,7 @@
 </template>
   
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import Dialog from '@/components/Dialog';
 import { MenuButton, MenuItems, MenuItem, Menu } from '@headlessui/vue';
 import { ChevronDownIcon, FunnelIcon, Squares2X2Icon } from '@heroicons/vue/20/solid';
@@ -101,7 +106,17 @@ onMounted(async () => {
   if (route.query.category != undefined) {
     catalogStorage.selectedValues.value.category = route.query.category?.toString().split(",").map(Number) as [];
   }
-  catalogStorage.loadProducts();
+  if (route.query.modification != undefined) {
+    catalogStorage.selectedValues.value.modification = route.query.modification?.toString().split(",").map(Number) as [];
+  }
+  if (route.params.manufactor_id != undefined) {
+    catalogStorage.selectedValues.value.manufactor_id = route.params.manufactor_id.toString();
+  }
+  catalogStorage.loadProducts(catalogStorage.selectedValues.value);
+});
+
+watch(catalogStorage.selectedValues.value, (value)=>{
+  catalogStorage.loadProducts(value);
 });
 
 const sortOptions = [

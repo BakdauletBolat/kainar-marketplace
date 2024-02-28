@@ -3,6 +3,7 @@ import Services from '@/views/services.vue';
 import ProductDetail from '@/views/product/detail.vue';
 import Catalog from '@/views/catalog/index.vue';
 import OrderCreate from '@/views/order/create.vue';
+import Login from '@/views/auth/login.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
@@ -13,6 +14,7 @@ const routes = [
     },
     {
         path: '/order',
+        meta: { isRequiresAuth: true },
         name: 'order-create',
         component: OrderCreate
     },
@@ -30,6 +32,16 @@ const routes = [
         path: '/catalog',
         name: 'catalog',
         component: Catalog
+    },
+    {
+        path: '/catalog/:manufactor_id',
+        name: 'catalog-manufactor',
+        component: Catalog
+    },
+    {
+        path:'/login',
+        name: 'login',
+        component: Login
     }
 ]
 
@@ -38,4 +50,9 @@ export const router = createRouter({
     // are using the hash history for simplicity here.
     history: createWebHistory(),
     routes, // short for `routes: routes`
-  })
+})
+
+// router.beforeEach((to, from, next) => {
+//     if (to.meta.isRequiresAuth &&  to.name !== 'login' && localStorage.getItem('auth-token') == undefined) next({ name: 'login' })
+//     else next()
+// })
