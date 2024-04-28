@@ -15,6 +15,6 @@ jobs:
         password: ${{ secrets.SERVER_PASSWORD }}
         port: ${{ secrets.SERVER_PORT }}
         script: |
-          cd /var/www/kainar-marketplace |
-          git pull |
+          cd /var/www/kainar-marketplace 
+          git pull 
           npm run build
