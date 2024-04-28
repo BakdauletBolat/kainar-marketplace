@@ -1,6 +1,7 @@
 import axiosInstance from "@/api";
 import { getProducts } from "@/api/products";
 import { ref } from "vue";
+//@ts-ignore
 import { v4 as uuidv4 } from 'uuid';
 
 interface Good {
