@@ -7,7 +7,7 @@ import Errors from '@/components/Errors';
 <template>
   <div class="relative min-h-full bg-slate-100">
     <Header></Header>
-    <div class="pt-[80px] bg-slate-100">
+    <div class="bg-slate-100">
       <Errors></Errors>
       <router-view></router-view>
     </div>

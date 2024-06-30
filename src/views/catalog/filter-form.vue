@@ -1,7 +1,7 @@
 <template>
     <form :class="{
       'pointer-events-none opacity-50': catalogStorage.isProductLoading.value,
-    }" class="lg:border lg:px-5 lg:py-2 rounded-sm lg:max-h-[100vh] lg:overflow-scroll">
+    }" class="lg:px-5 lg:py-2 rounded-sm lg:max-h-[100vh] lg:overflow-scroll">
               <h3 class="sr-only">Categories</h3>
               <Disclosure :defaultOpen="section.isOpen"  as="div" v-for="section in catalogStorage.filters" :key="section.id"
                 class="py-3" v-slot="{ open }">

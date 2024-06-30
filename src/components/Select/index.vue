@@ -1,7 +1,7 @@
 <template>
-    <div ref="target" class="relative border flex justify-between items-center p-2 rounded-sm">
+    <div ref="target" class="relative flex justify-between items-center p-2 rounded-lg border">
         <div class="flex flex-wrap w-full items-center gap-1">
-            <div v-if="open || model!.length <= 1" class="p-1 border rounded-sm flex gap-1 items-center justify-center"
+            <div v-if="open || model!.length <= 1" class="p-1 rounded-lg flex gap-1 items-center justify-center"
                 :key="option.id" v-for="option in model">
                 <span class="text-sm text-slate-500">{{ option.name }}</span>
                 <XMarkIcon @click="update(option)" class="w-5 h-5 cursor-pointer"></XMarkIcon>
@@ -18,7 +18,7 @@
             <ChevronUpDownIcon @click="open = !open" class="w-6 h-6 cursor-pointer"></ChevronUpDownIcon>
         </div>
         <div v-if="open"
-            class="h-[250px] top-full left-0 rounded-sm w-full border shadow-md bg-white z-10 absolute overflow-scroll flex flex-col">
+            class="h-[250px] top-full left-0 rounded-lg w-full  shadow-md bg-white z-10 absolute overflow-scroll flex flex-col">
             <div @click="update(option)" class="p-2 flex items-center gap-2 cursor-pointer  hover:bg-primary "
                 v-for="option in filteredOptions" :key="option.id"><CheckIcon class="h-5 w-5 text-sky-700" v-if="contains(option)"></CheckIcon> <div>{{ option.name }}</div></div>
         </div>

@@ -1,7 +1,7 @@
 <template>
     <div class="grid grid-cols-[100px_1fr] gap-3 rounded-sm">
         <div class="h-[100px] block">
-            <img class="rounded border w-full h-full object-cover"
+            <img class="rounded w-full h-full object-cover"
                 :src="item.picture_url ?? 'https://demofree.sirv.com/nope-not-here.jpg'"
                 alt="">
         </div>

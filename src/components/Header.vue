@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue';
 import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
 import { CardStorage } from '@/storages/storage';
 import { useRoute, useRouter } from 'vue-router';
@@ -29,83 +28,57 @@ const route = useRoute();
 </script>
 
 <template>
-    <div>
-        <Dialog title="Ваша корзина" v-model="cardStorage.isActive.value">
-            <UserCard></UserCard>
-            <button @click="navigateToOrder" class="mt-3 bg-primary w-full block p-3 text-center rounded-sm">Оформить заказ</button>
-        </Dialog>
+  <div>
+    <Dialog title="Ваша корзина" v-model="cardStorage.isActive.value">
+      <UserCard></UserCard>
+      <button @click="navigateToOrder" class="mt-3 bg-primary w-full block p-3 text-center rounded-sm">Оформить заказ</button>
+    </Dialog>
+  </div>
+  <div class="w-full bg-white z-[9999] border-b border-b-slate-100 fixed top-0">
+    <div class="mx-auto bg-white flex max-w-7xl px-6 py-4">
+      <div class="flex items-center gap-2">
+        <RouterLink to="/"
+                    class="">
+          <img class="h-10 w-10" :src="logoPng" alt="Home" />
+        </RouterLink>
+        <div class="text-lg"><span class="font-bold">Kainar</span> Авто</div>
+      </div>
     </div>
-    <Disclosure as="nav" class="bg-white border-b fixed z-[9999] w-full" v-slot="{ open }">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="flex h-16 items-center justify-between">
-                <div class="flex items-center">
-                    <RouterLink to="/"
-                        class="flex-shrink-0 border-transparent border hover:border rounded-md hover:border-white">
-                        <img class="h-10 w-10 " :src="logoPng" alt="Home" />
-                    </RouterLink>
-                    <div class="hidden md:block">
-                        <div class="ml-10 flex items-baseline space-x-4">
+  </div>
+    <div class="bg-white absolute top-[73px] z-[9998] w-full">
+        <div class="mx-auto max-w-7xl">
+            <div class="flex p-2 items-center justify-between">
+                        <div class="flex items-baseline">
                             <RouterLink v-for="item in navigation" :key="item.name" :to="{ name: item.to }"
-                                :class="[item.to == route.name ? 'bg-primary ' : 'hover:black', 'rounded-sm px-3 py-2 text-sm']"
+                                :class="[item.to == route.name ? 'underline underline-offset-2' : 'hover:black', 'rounded-sm px-3 py-2 text-sm']"
                                 :aria-current="item.to == route.name ? 'page' : undefined">{{ item.name }}</RouterLink>
                         </div>
-                    </div>
-                </div>
-                <div class="hidden md:block">
-                    <div class="ml-4 flex items-center md:ml-6">
+                <div class="md:block">
+                    <div class="flex items-center md:ml-6">
                         <!-- Profile dropdown -->
                         <div class="relative ml-3">
                             <div>
-                                <div @click="() => {
-                                    cardStorage.isActive.value = !cardStorage.isActive.value;
-
-                                }"
+                                <div @click="() => {cardStorage.isActive.value = !cardStorage.isActive.value; console.log('asds')}"
                                     class="relative text-white cursor-pointer flex max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                     <span class="absolute -inset-1.5" />
                                     <span class="sr-only">Open user menu</span>
-                                    <ShoppingCartIcon class="h-6 w-6 text-black" aria-hidden="true" />
-                                    <div
-                                        class="bg-red-400 w-[20px] text-white text-sm flex items-center justify-center rounded-[100%] h-[20px]">
-                                        {{
-                                            cardStorage.goods.value.length }}</div>
+                                    <div class="px-2">
+                                      <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2 2H3.74001C4.82001 2 5.67 2.93 5.58 4L4.75 13.96C4.61 15.59 5.89999 16.99 7.53999 16.99H18.19C19.63 16.99 20.89 15.81 21 14.38L21.54 6.88C21.66 5.22 20.4 3.87 18.73 3.87H5.82001" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M16.25 22C16.9404 22 17.5 21.4404 17.5 20.75C17.5 20.0596 16.9404 19.5 16.25 19.5C15.5596 19.5 15 20.0596 15 20.75C15 21.4404 15.5596 22 16.25 22Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M8.25 22C8.94036 22 9.5 21.4404 9.5 20.75C9.5 20.0596 8.94036 19.5 8.25 19.5C7.55964 19.5 7 20.0596 7 20.75C7 21.4404 7.55964 22 8.25 22Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M9 8H21" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                      </svg>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="flex md:hidden gap-3 items-center">
-                    <!-- Mobile menu button -->
-                    <div @click="cardStorage.isActive.value = !cardStorage.isActive.value"
-                        class="pr-2 flex relative cursor-pointer">
-                        <ShoppingCartIcon class="h-6 w-6" aria-hidden="true" />
-                        <div
-                            class="bg-red-400 text-white w-[15px] bottom-[-3px] right-0 absolute text-[10px] flex items-center justify-center rounded-[100%] h-[15px]">
-                            {{
-                                cardStorage.goods.value.length }}</div>
-                    </div>
-                    <DisclosureButton
-                        class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-hover">
-                        <span class="absolute -inset-0.5" />
-                        <span class="sr-only">Open main menu</span>
-                        <Bars3Icon v-if="!open" class="block h-6 w-6" aria-hidden="true" />
-                        <XMarkIcon v-else class="block h-6 w-6" aria-hidden="true" />
-                    </DisclosureButton>
-
-
-                </div>
             </div>
         </div>
-
-        <DisclosurePanel class="md:hidden">
-            <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-                <DisclosureButton v-for="item in navigation" :key="item.name" as="div">
-                    <RouterLink :to="{ name: item.to }"
-                        :class="[item.to == route.name ? 'bg-primary' : 'hover:bg-primart-hover', 'block rounded-md px-3 py-2 text-base font-medium']"
-                        :aria-current="item.to == route.name ? 'page' : undefined">{{ item.name }}</RouterLink>
-                </DisclosureButton>
-            </div>
-        </DisclosurePanel>
-    </Disclosure>
+    </div>
+  <div class="h-[125px]"></div>
 </template>
 
 <style scoped></style>

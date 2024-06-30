@@ -4,28 +4,28 @@
             <TabList class="grid grid-cols-4 p-3 justify-center gap-2">
                 <Tab :disabled="order" as="template" v-slot="{ selected }">
                     <button  :class="{'!bg-gray-400 opacity-50': order, 'focus:outline-none !bg-primary -translate-y-1': selected }"
-                        class="bg-white px-4 flex flex-col items-center border gap-1 py-2 rounded-sm">
+                        class="bg-white px-4 flex flex-col items-center gap-1 py-2 rounded-lg">
                         <MapIcon class="h-5 w-5"></MapIcon>
                         <div>Адрес</div>
                     </button>
                 </Tab>
                 <Tab :disabled="order" as="template" v-slot="{ selected }">
                     <button :class="{'!bg-gray-400 opacity-50': order,  'focus:outline-none -translate-y-1 !bg-primary': selected }"
-                        class="bg-white px-4 flex flex-col items-center border gap-1 py-2 rounded-sm">
+                        class="bg-white px-4 flex flex-col items-center gap-1 py-2 rounded-lg">
                         <TruckIcon class="w-5 h-5"></TruckIcon>
                         <div>Доставка</div>
                     </button>
                 </Tab>
                 <Tab :disabled="order" as="template" v-slot="{ selected }">
                     <button :class="{'!bg-gray-400 opacity-50': order,  'focus:outline-none -translate-y-1 !bg-primary': selected }"
-                        class="bg-white px-4 flex flex-col items-center border gap-1 py-2 rounded-sm">
+                        class="bg-white px-4 flex flex-col items-center gap-1 py-2 rounded-lg">
                         <BanknotesIcon class="w-5 h-5"></BanknotesIcon>
                         <div>Оплата</div>
                     </button>
                 </Tab>
                 <Tab :disabled="order" as="template" v-slot="{ selected }">
                     <button :class="{ 'focus:outline-none -translate-y-1 !bg-primary': selected }"
-                        class="bg-white px-4 flex flex-col items-center border gap-1 py-2 rounded-sm">
+                        class="bg-white px-4 flex flex-col items-center gap-1 py-2 rounded-lg">
                         <CheckBadgeIcon class="w-5 h-5"></CheckBadgeIcon>
                         <div>Спасибо!</div>
                     </button>
@@ -35,7 +35,7 @@
                 <div>
                     <TabPanels>
                         <TabPanel>
-                            <form @submit="onSubmit" class="flex border p-5 bg-white flex-col gap-3">
+                            <form @submit="onSubmit" class="flex rounded-lg p-4 bg-white flex-col gap-3">
                                 <div class="text-2xl font-bold">Адрес доставки</div>
                                 <div class="flex flex-col lg:flex-row gap-3">
                                     <Input name="name" placeholder="Имя"></Input>
@@ -60,11 +60,11 @@
                                     <Input name="phone" placeholder="Телефон"></Input>
                                 </div>
                                 <button
-                                    class="mt-3 bg-primary p-3 text-center cursor-pointer rounded-sm">Продолжить</button>
+                                    class="mt-3 bg-primary p-3 text-center cursor-pointer rounded-lg">Продолжить</button>
                             </form>
                         </TabPanel>
                         <TabPanel>
-                            <div class="flex border p-5 bg-white flex-col gap-3">
+                            <div class="flex p-4 rounded-lg bg-white flex-col gap-3">
                                 <div class="text-2xl font-bold">Доставка</div>
                                 <RadioGroup v-model="plan" class="flex flex-col gap-3">
                                     <RadioGroupOption v-slot="{ checked }" value="1">
@@ -109,11 +109,11 @@
 
                                 </RadioGroup>
                                 <button @click="changeTab(2)"
-                                    class="mt-3 bg-primary p-3 text-center cursor-pointer rounded-sm">Продолжить</button>
+                                    class="mt-3 bg-primary p-3 text-center cursor-pointer rounded-lg">Продолжить</button>
                             </div>
                         </TabPanel>
                         <TabPanel>
-                            <div class="flex border p-5 bg-white flex-col gap-3">
+                            <div class="flex rounded-lg p-4 bg-white flex-col gap-3">
                                 <div class="text-2xl font-bold">Оплата</div>
                                 <RadioGroup v-model="pay" class="flex flex-col gap-3">
                                     <RadioGroupOption v-slot="{ checked }" value="1">
@@ -145,16 +145,17 @@
                             </div>
                         </TabPanel>
                         <TabPanel>
-                            <div v-if="order" class="flex border p-5 bg-white flex-col gap-3">
-                               Спасибо #{{order.id}} ваш заказ создан !
+                            <div v-if="order" class="flex p-4 bg-white rounded-lg flex-col gap-3">
+                               <h2>Спасибо #{{order.id}} ваш заказ создан !</h2>
+                                <p>В скором времени вам позвонит наш менеджер</p>
+                              <p>Спасибо за ваш заказ! Наш менеджер скоро свяжется с вами для дальнейшей информации.</p>
                             </div>
                         </TabPanel>
                     </TabPanels>
                 </div>
-                <div class="bg-white border p-5">
+                <div class="bg-white rounded-lg p-4">
                     <h2 class="text-xl font-bold">Информация о заказе</h2>
                     <UserCard class="mt-3"></UserCard>
-
                 </div>
             </div>
 

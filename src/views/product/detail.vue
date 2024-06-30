@@ -1,16 +1,16 @@
 <template>
-    <div class="mx-auto relative max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto relative max-w-7xl p-4 mt-4 sm:px-6 lg:px-8">
         <div v-if="product" class="grid relative w-full grid-cols-1 lg:grid-cols-[500px_1fr] gap-5">
             <div class="order-2 lg:order-1">
-                <div class="p-5 w-full bg-white border hidden lg:block">
+                <div class="p-5 w-full bg-white rounded-lg hidden lg:block">
                     <ProductSlider :pictures="product?.pictures"></ProductSlider>
                 </div>
-                <div class="p-5 w-full lg:mt-5 bg-white border">
+                <div class="p-5 w-full lg:mt-5 bg-white rounded-lg">
                     <h2 class="font-bold text-lg">Машина</h2>
                     <div>
                         <ul>
 
-                            <li class="flex py-3 justify-between border-b">
+                            <li class="flex py-3 justify-between -b">
                                 <div class="font-light text-slate-500">
                                     Модификация
                                 </div>
@@ -19,7 +19,7 @@
                                 </p>
                             </li>
 
-                            <li class="flex py-3 justify-between border-b">
+                            <li class="flex py-3 justify-between -b">
                                 <div class="font-light text-slate-500">
                                     Год
                                 </div>
@@ -28,7 +28,7 @@
                                 </p>
                             </li>
 
-                            <li class="flex py-3 justify-between border-b">
+                            <li class="flex py-3 justify-between -b">
                                 <div class="font-light text-slate-500">
                                     Код двигателя
                                 </div>
@@ -37,7 +37,7 @@
                                 </p>
                             </li>
 
-                            <li class="flex py-3 justify-between border-b">
+                            <li class="flex py-3 justify-between -b">
                                 <div class="font-light text-slate-500">
                                     Тип топлива
                                 </div>
@@ -46,7 +46,7 @@
                                 </p>
                             </li>
 
-                            <li class="flex py-3 justify-between border-b">
+                            <li class="flex py-3 justify-between -b">
                                 <div class="font-light text-slate-500">
                                     Объем двигателя
                                 </div>
@@ -55,7 +55,7 @@
                                 </p>
                             </li>
 
-                            <li class="flex py-3 justify-between border-b">
+                            <li class="flex py-3 justify-between -b">
                                 <div class="font-light text-slate-500">
                                     Тип коробки передач
                                 </div>
@@ -64,7 +64,7 @@
                                 </p>
                             </li>
 
-                            <li class="flex py-3 justify-between border-b">
+                            <li class="flex py-3 justify-between -b">
                                 <div class="font-light text-slate-500">
                                     Ведущие колеса
                                 </div>
@@ -73,7 +73,7 @@
                                 </p>
                             </li>
 
-                            <li class="flex py-3 justify-between border-b">
+                            <li class="flex py-3 justify-between -b">
                                 <div class="font-light text-slate-500">
                                     Цвет
                                 </div>
@@ -82,7 +82,7 @@
                                 </p>
                             </li>
 
-                            <li class="flex py-3 justify-between border-b">
+                            <li class="flex py-3 justify-between -b">
                                 <div class="font-light text-slate-500">
                                     Тип кузова
                                 </div>
@@ -91,7 +91,7 @@
                                 </p>
                             </li>
 
-                            <li class="flex py-3 justify-between border-b">
+                            <li class="flex py-3 justify-between -b">
                                 <div class="font-light text-slate-500">
                                     Пробег
                                 </div>
@@ -100,7 +100,7 @@
                                 </p>
                             </li>
 
-                            <li class="flex py-3 justify-between border-b">
+                            <li class="flex py-3 justify-between -b">
                                 <div class="font-light text-slate-500">
                                     Положение рулевого колеса
                                 </div>
@@ -109,7 +109,7 @@
                                 </p>
                             </li>
 
-                            <li class="flex py-3 justify-between border-b">
+                            <li class="flex py-3 justify-between -b">
                                 <div class="font-light text-slate-500">
                                     OEM-коды
                                 </div>
@@ -118,7 +118,7 @@
                                 </p>
                             </li>
 
-                            <li class="flex py-3 justify-between border-b">
+                            <li class="flex py-3 justify-between -b">
                                 <div class="font-light text-slate-500">
                                     Состояние
                                 </div>
@@ -127,7 +127,7 @@
                                 </p>
                             </li>
 
-                            <li class="flex py-3 justify-between border-b">
+                            <li class="flex py-3 justify-between -b">
                                 <div class="font-light text-slate-500">
                                     Мощность двигателя
                                 </div>
@@ -139,25 +139,24 @@
                     </div>
                 </div>
             </div>
-
             <div class="order-1 lg:order-2">
                 <div class="lg:sticky lg:top-20 z-10">
-                    <div class="border bg-white p-5">
-                        <ProductMobileSlider :pictures="product?.pictures" class="lg:hidden border"></ProductMobileSlider>
+                    <div class=" bg-white rounded-lg p-5">
+                        <ProductMobileSlider :pictures="product?.pictures" class="lg:hidden "></ProductMobileSlider>
                         <h1 class="text-lg lg:text-2xl font-bold mt-3">{{ product.modification.modelCar.name }} (
                             {{ product.modification.modelCar.startDate }} - {{ product.modification.modelCar.endDate }}
                         ) {{ product.name }}</h1>
                         <div class="flex justify-between flex-col lg:flex-row gap-2 lg:gap-0 lg:items-center mt-3">
                             <div class="text-xl lg:text-2xl font-bold">{{product.price}} ₸</div>
-                                <button @click="cardStorage.isActive.value = true" v-if="cardStorage.checkInGoods(product.id)" class="rounded-sm flex p-3 gap-1 border justify-center">
+                                <button @click="cardStorage.isActive.value = true" v-if="cardStorage.checkInGoods(product.id)" class="rounded-lg flex p-3 gap-1  justify-center">
                                     <ShoppingCartIcon class="h-6 w-6"></ShoppingCartIcon> В корзину
                                 </button>
-                                <button v-else @click="addGoods" class="p-3 bg-primary rounded-sm flex gap-1 justify-center">
+                                <button v-else @click="addGoods" class="p-3 bg-primary rounded-lg flex gap-1 justify-center">
                                     <ShoppingCartIcon class="h-6 w-6"></ShoppingCartIcon> Добавить в корзину
                                 </button>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-3 border bg-white lg:gap-2 py-5 px-5 justify-between my-4 gap-5">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 rounded-lg bg-white lg:gap-2 py-5 px-5 justify-between my-4 gap-5">
                         <div class="flex gap-2 flex-col items-center">
                             <TruckIcon class="w-12 h-12 text-sky-500"></TruckIcon>
                             <div class="flex flex-col justify-center items-center">
@@ -180,13 +179,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="border pt-5 bg-white p-3">
+                    <div class=" pt-5 bg-white rounded-lg p-3">
                         <h2 class="text-xl font-bold">Расчетная время доставки*</h2>
                         <SelectSingle class="mt-5" v-model="countryId" :options="countryOptions"
                             placeholder="Выберите страну"></SelectSingle>
                         <table class="table-auto mt-5 w-full">
                             <thead>
-                                <tr class="text-left border-b  text-gray-500 font-light">
+                                <tr class="text-left -b  text-gray-500 font-light">
                                     <th class="font-light py-2">Курьер</th>
                                     <th class="font-light py-2">Цена от</th>
                                     <th class="font-light py-2">Доставка</th>

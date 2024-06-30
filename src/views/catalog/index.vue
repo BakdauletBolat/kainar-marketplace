@@ -1,17 +1,3 @@
-<!--
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
--->
 <template>
   <div>
     <div>
@@ -20,10 +6,9 @@
         <!-- Filters -->
         <FilterForm></FilterForm>
       </Dialog>
-      <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="flex bg-white border p-5 items-baseline justify-between">
+      <main class="mx-auto max-w-7xl p-4 sm:px-6 lg:px-8">
+        <div class="flex p-4 items-baseline justify-between">
           <h1 class="text-xl font-bold tracking-tight text-gray-900">Каталог</h1>
-
           <div class="flex items-center">
             <Menu as="div" class="relative inline-block text-left">
               <div>
@@ -34,7 +19,6 @@
                     aria-hidden="true" />
                 </MenuButton>
               </div>
-
               <transition enter-active-class="transition ease-out duration-100"
                 enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
                 leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
@@ -68,7 +52,7 @@
           <div class="grid grid-cols-1 relative gap-3 lg:mt-3 items-start lg:grid-cols-[350px_1fr]">
             <!-- Filters -->
             <div class="">
-              <FilterForm class="sticky top-20 hidden bg-white lg:block"></FilterForm>
+              <FilterForm class="sticky top-20 hidden bg-white rounded-lg lg:block"></FilterForm>
             </div>
 
             <!-- Product grid -->

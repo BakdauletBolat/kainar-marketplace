@@ -1,5 +1,5 @@
 <template>
-    <div ref="target" class="relative border flex justify-between items-center p-2 rounded-sm">
+    <div ref="target" class="relative rounded-lg border flex justify-between items-center p-2">
         <div class="flex flex-wrap w-full items-center gap-1">
             <input v-model="query" @focus="open = true" class="w-full text-sm focus:outline-none p-2" :placeholder="placeholder" />
         </div>
@@ -7,7 +7,7 @@
             <ChevronUpDownIcon @click="open = !open" class="w-6 h-6 cursor-pointer"></ChevronUpDownIcon>
         </div>
         <div v-if="open"
-            class="max-h-[250px] top-full left-0 rounded-sm w-full border shadow-md bg-white z-10 absolute overflow-scroll flex flex-col">
+            class="max-h-[250px] top-full left-0 w-full border rounded-lg shadow-md bg-white z-10 absolute overflow-scroll flex flex-col">
             <div :class="{
                 'bg-primary text-white': contains(option)
             }" @click="update(option)" class="p-2 cursor-pointer  hover:bg-primary "

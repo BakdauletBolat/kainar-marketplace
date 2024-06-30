@@ -1,5 +1,5 @@
 <template>
-    <div class="flex bg-white border lg:flex-row flex-col p-2 lg:p-5 gap-3 hover:border-slate-400  rounded-sm">
+    <div class="flex bg-white rounded-lg lg:flex-row flex-col p-2 lg:p-5 gap-3 hover:border-slate-400  rounded-sm">
         <div>
             <img class="rounded border lg:h-[120px] h-[200px] object-cover w-full lg:w-[160px]"
                 :src="item.pictures.length != 0 ? item.pictures[0].image : 'https://demofree.sirv.com/nope-not-here.jpg'"
