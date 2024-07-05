@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ShoppingCartIcon, Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
 import { CardStorage } from '@/storages/storage';
 import { useRoute, useRouter } from 'vue-router';
 import logoPng from '@/assets/new-logo.png';
